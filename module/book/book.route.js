@@ -1,8 +1,9 @@
 const router = require("express").Router();
-const usercontroller = require("./user.controller");
-router.get("/", (req, res, next) => {
+const bookcontroller = require("./user.controller");
+router.get("/", async (req, res, next) => {
   try {
-    res.json({ msg: "hello from index" });
+    result = await bookcontroller.getbyid(Id);
+    res.json();
   } catch (e) {
     next(e);
   }
@@ -13,7 +14,7 @@ router.post("/", async (req, res, next) => {
     const data = req.body;
     data.time = Math.floor(data.words / 238);
     console.log({ data });
-    const result = await usercontroller.create(data);
+    const result = await bookcontroller.create(data);
     res.json({ msg: result });
   } catch (e) {
     next(e);
@@ -22,10 +23,10 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    const id = req.params.id; // Corrected parameter extraction
+    const id = req.params.id;
     const body = req.body;
     console.log({ id, body });
-    const result = await usercontroller.updateById(id, body);
+    const result = await bookcontroller.updateById(id, body);
     res.json({ msg: result });
   } catch (e) {
     next(e);
@@ -34,7 +35,7 @@ router.put("/:id", async (req, res, next) => {
 
 router.patch("/:id", async (req, res, next) => {
   try {
-    const id = req.params.id; // Corrected parameter extraction
+    const id = req.params.id;
     const body = req.body;
     console.log({ id, body });
     const result = await usercontroller.updateById(id, body);
@@ -43,12 +44,12 @@ router.patch("/:id", async (req, res, next) => {
     next(e);
   }
 });
-router.patch("/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const body = req.body;
     console.log({ id, body });
-    const result = await usercontroller.deleteOne(id, body);
+    const result = await bookcontroller.deleteOne(id, body);
     res.json({ msg: result });
   } catch (e) {
     next(e);
